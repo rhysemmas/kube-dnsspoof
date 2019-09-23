@@ -1,8 +1,20 @@
-apiVersion: v1
-kind: Pod
+apiVersion: extensions/v1beta1
+kind: DaemonSet
 metadata:
-  name: hacker
+  name: dns-spoofer
+  namespace: default
 spec:
-  containers: 
-  - name: hacker
-    image: danielsagi/kube-dnsspoof
+  template:
+    metadata:
+      labels:
+        name: dns-spoofer
+    spec:
+      containers:
+      - name: dns-spoofer
+        image: rhysemmas/kube-dnsspoof
+        resources:
+          limits:
+            memory: 200Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
