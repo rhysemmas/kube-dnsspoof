@@ -1,20 +1,21 @@
-apiVersion: extensions/v1beta1
-kind: DaemonSet
+apiVersion: v1
+kind: Pod
 metadata:
   name: dns-spoofer
   namespace: default
 spec:
-  template:
-    metadata:
-      labels:
-        name: dns-spoofer
-    spec:
-      containers:
-      - name: dns-spoofer
-        image: rhysemmas/kube-dnsspoof
-        resources:
-          limits:
-            memory: 200Mi
-          requests:
-            cpu: 50m
-            memory: 100Mi
+  affinity:
+    podAffinity: 
+      requiredDuringSchedulingIgnoredDuringExecution: 
+      - labelSelector:
+          matchExpressions:
+          - key: k8s-app
+            operator: In
+            values:
+            - kube-dns
+        topologyKey: failure-domain.beta.kubernetes.io/zone
+        namespaces: 
+        - kube-system
+  containers:
+  - name: dns-spoofer
+    image: rhysemmas/kube-dnsspoof

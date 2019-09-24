@@ -1,6 +1,7 @@
 # Kube-Dnsspoof
 
 `Credit:` https://github.com/danielsagi
+`Note:` Scale kube-dns deploy to 1 replica for EZ mode
 
 Kube-dnsspoof is a POC for DNS spoofing in kubernetes clusters.
 This exploit runs with minimum capabilities, on default installations of kuberentes.
