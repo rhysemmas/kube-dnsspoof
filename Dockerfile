@@ -8,7 +8,8 @@ RUN pip3 install scapy
 RUN mkdir /dnsspoof
 WORKDIR /dnsspoof
 
-COPY hosts exploit.py ./
+COPY hosts exploit.py entrypoint.sh ./
 RUN dos2unix exploit.py && chmod +x exploit.py
+RUN chmod +x entrypoint.sh
 
-CMD ["python3", "exploit.py"]
+CMD ["sh", "entrypoint.sh"]
