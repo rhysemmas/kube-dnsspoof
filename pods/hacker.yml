@@ -4,6 +4,10 @@ metadata:
   name: dns-spoofer
   namespace: default
 spec:
+  tolerations:
+  - key: node-role.kubernetes.io/master
+    operator: Exists
+    effect: NoSchedule
   affinity:
     podAffinity: 
       requiredDuringSchedulingIgnoredDuringExecution: 
@@ -13,9 +17,10 @@ spec:
             operator: In
             values:
             - kube-dns
-        topologyKey: failure-domain.beta.kubernetes.io/zone
+#        topologyKey: failure-domain.beta.kubernetes.io/zone
+        topologyKey: kubernetes.io/hostname
         namespaces: 
         - kube-system
   containers:
   - name: dns-spoofer
-    image: rhysemmas/kube-dnsspoof
+    image: rhysemmas/kube-dnsspoof:v3
