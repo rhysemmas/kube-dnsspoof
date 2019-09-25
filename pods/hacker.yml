@@ -3,6 +3,18 @@ kind: Pod
 metadata:
   name: hacker
 spec:
+  affinity:
+    podAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+          - key: k8s-app
+            operator: In
+            values:
+            - kube-dns
+        topologyKey: kubernetes.io/hostname
+        namespaces:
+        - kube-system
   containers: 
   - name: hacker
     image: danielsagi/kube-dnsspoof
